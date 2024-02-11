@@ -6,13 +6,22 @@
 /*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:48:03 by jschroed          #+#    #+#             */
-/*   Updated: 2024/02/11 11:49:10 by jschroed         ###   ########.fr       */
+/*   Updated: 2024/02/11 18:37:17 by jschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int main(void)
+int main(int argc, char **argv, char **env)
 {
-	ft_printf("HI");
+
+	(void)env;
+
+	if (argc != 1 || argv[1])
+	{
+		ft_printf("No arguments allowed: %s", argv[1]);
+		exit(1);
+	}
+	ft_printf("SUCCESS");
+	return (0);
 }

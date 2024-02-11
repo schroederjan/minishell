@@ -4,7 +4,7 @@ NAME = minishell
 # ####
 
 MKDIR = mkdir
-CC = cc
+CC = gcc
 CFLAGS	= -Wall -Werror -Wextra
 
 PATHS = src/
@@ -18,7 +18,7 @@ PATH_ERRORS = src/errors/
 PATH_EXECUTOR = src/executor/
 
 PATH_BUILD = build/
-PATH_OJBS = build/objs/
+PATH_OBJS = build/objs/
 BUILD_PATHS = $(PATH_BUILD) $(PATH_OBJS)
 
 SRCS = $(shell find ./src -iname "*.c")
@@ -40,39 +40,39 @@ INCLUDES = -Iincludes -I$(PATH_LIBFT)
 all: $(BUILD_PATHS) $(NAME)
 
 $(PATH_OBJS)%.o:: $(PATHS)%.c
-	@echo "Compiling ${notdir $<}			in	$(PATHS)"
-	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+	@echo "Compiling ${notdir $<} in	$(PATHS)"
+	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
 
 $(PATH_OBJS)%.o:: $(PATH_LEXER)%.c $(HEADERS)
-	@echo "Compiling ${notdir $<}			in	$(PATH_LEXER)"
-	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+	@echo "Compiling ${notdir $<} in	$(PATH_LEXER)"
+	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
 
 $(PATH_OBJS)%.o:: $(PATH_PARSER)%.c $(HEADERS)
-	@echo "Compiling ${notdir $<}			in	$(PATH_PARSER)"
-	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+	@echo "Compiling ${notdir $<} in	$(PATH_PARSER)"
+	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
 
 $(PATH_OBJS)%.o:: $(PATH_BUILTINS)%.c $(HEADERS)
-	@echo "Compiling ${notdir $<}			in	$(PATH_BUILTINS)"
-	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+	@echo "Compiling ${notdir $<} in	$(PATH_BUILTINS)"
+	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
 
 $(PATH_OBJS)%.o:: $(PATH_EXPANDER)%.c $(HEADERS)
-	@echo "Compiling ${notdir $<}			in	$(PATH_EXPANDER)"
-	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+	@echo "Compiling ${notdir $<} in	$(PATH_EXPANDER)"
+	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
 
 $(PATH_OBJS)%.o:: $(PATH_UTILS)%.c $(HEADERS)
-	@echo "Compiling ${notdir $<}			in	$(PATH_UTILS)"
-	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+	@echo "Compiling ${notdir $<} in	$(PATH_UTILS)"
+	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
 
 $(PATH_OBJS)%.o:: $(PATH_ERRORS)%.c $(HEADERS)
-	@echo "Compiling ${notdir $<}			in	$(PATH_ERRORS)"
-	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+	@echo "Compiling ${notdir $<} in	$(PATH_ERRORS)"
+	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
 
 $(PATH_OBJS)%.o:: $(PATH_EXECUTOR)%.c $(HEADERS)
-	@echo "Compiling ${notdir $<}			in	$(PATH_EXECUTOR)"
-	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+	@echo "Compiling ${notdir $<} in	$(PATH_EXECUTOR)"
+	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
 
 $(NAME): $(LIBFT) $(OBJS) $(HEADERS)
-	@$(CC) $(FLAGS) $(LIBFT) $(OBJS) $(READLINE_LIB) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBFT)
 
 	@echo "Success"
 
