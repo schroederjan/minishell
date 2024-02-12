@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   minishell_structs.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:49:23 by jschroed          #+#    #+#             */
-/*   Updated: 2024/02/12 14:43:48 by jschroed         ###   ########.fr       */
+/*   Updated: 2024/02/12 14:00:06 by jschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef MINISHELL_STRUCTS_H
+# define MINISHELL_STRUCTS_H
 
-// ########
-// INCLUDES
-// ########
+// STRUCTS
 
-# include "minishell_structs.h"
-# include "minishell_defines.h"
-# include "minishell_includes.h"
-
-// #########
-// FUNCTIONS
-// #########
-
-// termination
-void	exit_shell(t_session *session, int exit_number);
-void	free_session(t_session *session, bool clear_history);
-void	free_array_str(char **array);
-void	free_pointer(void *ptr);
-
+typedef struct s_session
+{
+	char		*input;
+	char		**env;
+	char		*pwd;
+	char		*old_pwd;
+	// t_token		*token;
+	// t_command	*cmd;
+	// pid_t		pid;
+}	t_session;
 
 #endif
