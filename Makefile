@@ -7,104 +7,76 @@ MKDIR = mkdir
 CC = gcc
 CFLAGS	= -Wall -Werror -Wextra
 
-PATHS = src/
-PATH_LIBFT = libs/libft
-PATH_LEXER = src/lexer/
-PATH_PARSER = src/parser/
-PATH_BUILTINS = src/builtins/
-PATH_EXPANDER = src/expander/
-PATH_UTILS = src/utils/
-PATH_ERRORS = src/errors/
-PATH_EXECUTOR = src/executor/
-
-PATH_BUILD = build/
 PATH_OBJS = build/objs/
-BUILD_PATHS = $(PATH_BUILD) $(PATH_OBJS)
+PATH_LIBFT = libs/libft
 
-SRCS = $(shell find ./src -iname "*.c")
-OBJS = $(addprefix $(PATH_OBJS), $(notdir $(patsubst %.c, %.o, $(SRCS))))
+PATHS = src/
+PATH_LEXER = $(PATHS)lexer/
+PATH_PARSER = $(PATHS)parser/
+PATH_BUILTINS = $(PATHS)builtins/
+PATH_EXPANDER = $(PATHS)expander/
+PATH_UTILS = $(PATHS)utils/
+PATH_ERRORS = $(PATHS)errors/
+PATH_EXECUTOR = $(PATHS)executor/
+
+VPATH = $(PATHS):\
+	$(PATH_LEXER):\
+	$(PATH_PARSER):\
+	$(PATH_BUILTINS):\
+	$(PATH_EXPANDER):\
+	$(PATH_UTILS):\
+	$(PATH_ERRORS):\
+	$(PATH_EXECUTOR)
+
+SRCS = $(shell find $(PATHS) -type f -name '*.c')
+OBJS = $(SRCS:$(PATHS)%.c=$(PATH_OBJS)%.o)
+OBJ_DIRS = $(dir $(OBJS))
 
 LIBFT = $(PATH_LIBFT)/libft.a
 HEADERS = $(shell find ./includes -iname "*.h")
 
-# TODO: Whats that? Why would we need it?
-# READLINE_DIR = $(shell brew --prefix readline)
-# READLINE_LIB = -lreadline -lhistory -L $(READLINE_DIR)/lib
-# INCLUDES = -Iincludes -I$(PATH_LIBFT) -I$(READLINE_DIR)/include
-
+READLINE_LIB = -lreadline -lhistory -ltermcap
 INCLUDES = -Iincludes -I$(PATH_LIBFT)
 
 # COMMANDS
 # ########
 
-all: $(BUILD_PATHS) $(NAME)
+all: $(NAME)
 
-$(PATH_OBJS)%.o:: $(PATHS)%.c
-	@echo "Compiling ${notdir $<} in	$(PATHS)"
-	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
+$(OBJ_DIRS):
+	@$(MKDIR) -p $@
 
-$(PATH_OBJS)%.o:: $(PATH_LEXER)%.c $(HEADERS)
-	@echo "Compiling ${notdir $<} in	$(PATH_LEXER)"
-	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
-
-$(PATH_OBJS)%.o:: $(PATH_PARSER)%.c $(HEADERS)
-	@echo "Compiling ${notdir $<} in	$(PATH_PARSER)"
-	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
-
-$(PATH_OBJS)%.o:: $(PATH_BUILTINS)%.c $(HEADERS)
-	@echo "Compiling ${notdir $<} in	$(PATH_BUILTINS)"
-	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
-
-$(PATH_OBJS)%.o:: $(PATH_EXPANDER)%.c $(HEADERS)
-	@echo "Compiling ${notdir $<} in	$(PATH_EXPANDER)"
-	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
-
-$(PATH_OBJS)%.o:: $(PATH_UTILS)%.c $(HEADERS)
-	@echo "Compiling ${notdir $<} in	$(PATH_UTILS)"
-	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
-
-$(PATH_OBJS)%.o:: $(PATH_ERRORS)%.c $(HEADERS)
-	@echo "Compiling ${notdir $<} in	$(PATH_ERRORS)"
-	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
-
-$(PATH_OBJS)%.o:: $(PATH_EXECUTOR)%.c $(HEADERS)
-	@echo "Compiling ${notdir $<} in	$(PATH_EXECUTOR)"
-	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
+$(PATH_OBJS)%.o: %.c $(HEADERS) | $(OBJ_DIRS)
+	@echo "Compiling $<..."
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(LIBFT) $(OBJS) $(HEADERS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBFT)
-
-	@echo "Success"
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBFT) $(READLINE_LIB)
+	@echo "\n\033[33;1;3mMinishell ready!\033[0m"
 
 $(LIBFT):
+	@echo "Making libft..."
 	@$(MAKE) -C $(PATH_LIBFT)
 
-$(PATH_BUILD):
-	@$(MKDIR) $(PATH_BUILD)
-
-$(PATH_OBJS):
-	@$(MKDIR) $(PATH_OBJS)
-
 clean:
-	@echo "Cleaning"
-	@rm -f $(OBJS)
-	@rm -f $(PATH_BUILD).tmp*
-	@rmdir $(PATH_OBJS) $(PATH_BUILD)
+	@echo "Removing .o object files..."
+	@rm -rf $(PATH_OBJS)
 	@make fclean -C $(PATH_LIBFT)
 
 fclean: clean
+	@echo "Removing minishell..."
 	@rm -f $(NAME)
-	@rm -f $(LIBFT)
 
 re: fclean all
 
 norm:
-	@norminette ./includes
 	@norminette ./src
-	@norminette ./libs/libft
+	@norminette -R CheckForbiddenSourceHeader ./includes
+
+val:
+	@valgrind --track-fds=yes ./minishell
 
 # CONFIGS
 # #######
 
-.PRECIOUS: $(PATH_OBJS)%.o
 .PHONY: all clean fclean re norm
