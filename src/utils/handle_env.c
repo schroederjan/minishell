@@ -1,28 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   handle_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/11 11:48:03 by jschroed          #+#    #+#             */
-/*   Updated: 2024/02/22 10:39:52 by jschroed         ###   ########.fr       */
+/*   Created: 2024/02/22 09:49:07 by jschroed          #+#    #+#             */
+/*   Updated: 2024/02/22 10:41:36 by jschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
-t_global g_global;
-
-int	main(int argc, char **argv, char **env)
-{
-	t_session	session;
-
-	if (argc != 1 || argv[1])
-		return (ft_putendl_fd("No arguments allowed!", 2), 1);
-	session.env = ft_arrdup(env);
-	init_session_pwd_vars(&session);
-	init_session(&session);
-	minishell(&session);
-	return (0);
-}
+#include "../../includes/minishell.h"

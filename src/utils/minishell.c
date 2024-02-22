@@ -6,7 +6,7 @@
 /*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:30:06 by jschroed          #+#    #+#             */
-/*   Updated: 2024/02/21 10:50:30 by jschroed         ###   ########.fr       */
+/*   Updated: 2024/02/22 10:41:22 by jschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,35 @@ int	init_session(t_session *session)
 	// TODO: implement
 	/* init_signals(); */
 	return (1);
+}
+
+int init_session_pwd_vars(t_session *session) 
+{
+	int i;
+	size_t len;
+	int found;
+
+	i = 0;
+	found = 0;
+	while (session->env[i] && found < 2) 
+	{
+		len = ft_strlen(session->env[i]);
+		if (!ft_strncmp(session->env[i], "PWD=", 4))
+		{
+			session->pwd = ft_substr(session->env[i], 4, len - 4);
+			found++;
+		}
+		else if (!ft_strncmp(session->env[i], "OLDPWD=", 7))
+		{
+			session->old_pwd = ft_substr(session->env[i], 7, len - 7);
+			found++;
+		}
+		i++;
+	}
+	if (found > 0)
+		return (1);
+	else
+		return (0);
 }
 
 int	reset_session(t_session *session)
