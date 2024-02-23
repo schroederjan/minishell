@@ -6,7 +6,7 @@
 /*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:49:23 by jschroed          #+#    #+#             */
-/*   Updated: 2024/02/21 10:58:37 by jschroed         ###   ########.fr       */
+/*   Updated: 2024/02/23 11:13:48 by jschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_commands
 						// builtin_arr
 	int					(*builtin)(t_session *, struct s_commands *); // eg. echo
 	int					num_redirections;
-	char				*hd_file_name;
+	char				*heredocs_file_name;
 	t_lexer				*redirections; // eg. >file
 	struct s_commands	*next;
 	struct s_commands	*prev;

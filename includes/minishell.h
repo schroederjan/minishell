@@ -6,7 +6,7 @@
 /*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:49:23 by jschroed          #+#    #+#             */
-/*   Updated: 2024/02/22 10:40:13 by jschroed         ###   ########.fr       */
+/*   Updated: 2024/02/23 11:59:40 by jschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,13 @@ int		minishell(t_session *session);
 
 void	free_arr(char **arr);
 char	**ft_arrdup(char **arr);
+void	reset_commands(t_commands **commands_lst);
+void	reset_lexer(t_lexer **lexer_lst);
 
 // env
 
+// signal
+void	init_signals(void);
 
 // termination
 // void	exit_shell(t_session *session, int exit_number);
