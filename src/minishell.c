@@ -6,7 +6,7 @@
 /*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:30:06 by jschroed          #+#    #+#             */
-/*   Updated: 2024/02/23 13:27:11 by jschroed         ###   ########.fr       */
+/*   Updated: 2024/02/26 08:47:56 by jschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	minishell(t_session *session)
 	/* if (!count_quotes(session->args)) */
 	/*     return (ft_error(2, session)); */
 	// TODO: implement
-	/* if (!token_reader(session)) */
-	/*     return (ft_error(1, session)); */
+	if (!token_reader(session))
+		return (ft_error(1, session));
 	// TODO: implement
 	/* parser(session); */
 	// TODO: implement
