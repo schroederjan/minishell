@@ -6,7 +6,7 @@
 /*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:49:23 by jschroed          #+#    #+#             */
-/*   Updated: 2024/02/23 11:13:48 by jschroed         ###   ########.fr       */
+/*   Updated: 2024/02/27 08:56:12 by jschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,14 @@
 
 typedef enum s_tokens
 {
-	PIPE = 1,
-	GREAT,
-	GREAT_GREAT,
-	LESS,
-	LESS_LESS,
-}	t_tokens;
+    NO_TOKEN,
+    PIPE_MAP,
+    GREAT_MAP,
+    LESS_MAP,
+    DOUBLE_GREAT,
+    DOUBLE_LESS,
+    TOKEN_WORD,
+} t_tokens;
 
 // LEXER
 
@@ -81,6 +83,7 @@ typedef struct s_commands
 	struct s_commands	*next;
 	struct s_commands	*prev;
 }	t_commands;
+
 
 #endif
 

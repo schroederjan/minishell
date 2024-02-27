@@ -6,7 +6,7 @@
 /*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:49:23 by jschroed          #+#    #+#             */
-/*   Updated: 2024/02/23 11:59:40 by jschroed         ###   ########.fr       */
+/*   Updated: 2024/02/27 09:13:34 by jschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,21 @@ int		init_session(t_session *session);
 int		init_session_pwd_vars(t_session *session);
 int		reset_session(t_session *session);
 int		minishell(t_session *session);
+
+// lexer
+
+t_tokens		identify_token(const char *str, int pos);
+int				is_whitespace(char c);
+int				skip_whitespace(char *str, int i);
+
+int				parse_words(int start_pos, char *str, t_lexer **lexer_list);
+int				parse_input(t_session *session);
+
+int				handle_token(char *str, int pos, t_lexer **lexer_list, t_tokens ttype);
+
+t_lexer			*ft_lexer_new_node(char *str, int token);
+void			ft_lexer_add_node_back(t_lexer **lst, t_lexer *new_node);
+int				add_lexer_node(char *tval, t_tokens ttype, t_lexer **head);
 
 // utils
 
