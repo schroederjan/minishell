@@ -1,24 +1,5 @@
 #include "../../includes/minishell.h"
 
-void	reset_lexer(t_lexer **lexer_lst)
-{
-	t_lexer	*current;
-	t_lexer *next_node;
-
-	if (lexer_lst == NULL || *lexer_lst == NULL)
-		return ;
-	current = *lexer_lst;
-	while (current != NULL)
-	{
-		next_node = current->next;
-		if (current->word != NULL)
-			free(current->word);
-		free(current);
-		current = next_node;
-	}
-	*lexer_lst = NULL;
-}
-
 t_lexer	 *ft_lexer_new_node(char *str, int token)
 {
 	t_lexer		*lexer_node;
@@ -52,4 +33,17 @@ void ft_lexer_add_node_back(t_lexer **lst, t_lexer *new_node)
 		tmp->next = new_node; 
 		new_node->prev = tmp;
 	}
+}
+
+int		add_lexer_node(char *tval, t_tokens ttype, t_lexer **head) 
+{
+	t_lexer *new;
+
+	if (!head)
+		return 0;
+	new = ft_lexer_new_node(tval, ttype);
+	if (!new)
+		return 0;
+	ft_lexer_add_node_back(head, new);
+	return 1;
 }

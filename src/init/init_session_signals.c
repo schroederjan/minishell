@@ -1,10 +1,10 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int		event(void) {
+static int		event(void) {
 	return EXIT_SUCCESS;
 }
 
-void	sigint_handler(int sig) 
+static void	sigint_handler(int sig) 
 {
 	if (!g_global.in_heredoc)
 		ft_putstr_fd("\n", STDERR_FILENO);
@@ -24,7 +24,7 @@ void	sigint_handler(int sig)
 	(void)sig;
 }
 
-void	sigquit_handler(int sig) 
+static void	sigquit_handler(int sig) 
 {
 	ft_putstr_fd("\nQuit: ", STDERR_FILENO);
 	ft_putnbr_fd(sig, STDERR_FILENO);
@@ -32,7 +32,7 @@ void	sigquit_handler(int sig)
 	(void)sig;
 }
 
-void	init_signals(void) 
+void	init_session_signals(void) 
 {
 	struct sigaction sa_int;
 	struct sigaction sa_quit;
@@ -49,4 +49,3 @@ void	init_signals(void)
 	sa_quit.sa_flags = 0;
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
-

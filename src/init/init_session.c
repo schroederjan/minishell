@@ -10,13 +10,12 @@ int	init_session(t_session *session)
 	g_global.stop_heredoc = 0;
 	g_global.in_cmd = 0;
 	g_global.in_heredoc = 0;
-	// TODO: implement
-	/* parse_env(session); */
-	init_signals();
+	init_session_path(session);
+	init_session_signals();
 	return (1);
 }
 
-int init_session_pwd_vars(t_session *session) 
+int init_session_pwd(t_session *session) 
 {
 	int i;
 	size_t len;
@@ -43,17 +42,4 @@ int init_session_pwd_vars(t_session *session)
 		return (1);
 	else
 		return (0);
-}
-
-int	reset_session(t_session *session)
-{
-	reset_commands(&session->commands);
-	free(session->args);
-	if (session->pid)
-		free(session->pid);
-	free_arr(session->paths);
-	init_session(session);
-	session->reset_program = true;
-	minishell(session);
-	return (1);
 }

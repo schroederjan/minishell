@@ -1,18 +1,18 @@
 #include "../../includes/minishell.h"
 
-int		is_whitespace(char c)
+static int		is_whitespace(char c)
 {
 	return (c == ' ' || (c > 8 && c < 14));
 }
 
-int		skip_whitespace(char *str, int i)
+static int		skip_whitespace(char *str, int i)
 {
 	while (str[i] && is_whitespace(str[i]))
 		i++;
 	return i;
 }
 
-int		skip_quotes(int index, char *str, char quote_type) 
+static int		skip_quotes(int index, char *str, char quote_type) 
 {
 	int offset = 0;
 
@@ -26,7 +26,7 @@ int		skip_quotes(int index, char *str, char quote_type)
 	return offset;
 }
 
-int		parse_words(int start_pos, char *str, t_lexer **lexer_list) 
+static int		parse_words(int start_pos, char *str, t_lexer **lexer_list) 
 {
 	int		len;
     char	*word;

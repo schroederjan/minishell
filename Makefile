@@ -17,6 +17,7 @@ PATH_BUILTINS = $(PATHS)builtins/
 PATH_EXPANDER = $(PATHS)expander/
 PATH_UTILS = $(PATHS)utils/
 PATH_CLEANUP = $(PATHS)cleanup/
+PATH_INIT = $(PATHS)init/
 PATH_EXECUTOR = $(PATHS)executor/
 
 VPATH = $(PATHS):\
@@ -26,6 +27,7 @@ VPATH = $(PATHS):\
 	$(PATH_EXPANDER):\
 	$(PATH_UTILS):\
 	$(PATH_CLEANUP):\
+	$(PATH_INIT):\
 	$(PATH_EXECUTOR)
 
 SRCS = $(shell find $(PATHS) -type f -name '*.c')
