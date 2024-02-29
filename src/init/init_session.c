@@ -4,14 +4,16 @@ int	init_session(t_session *session)
 {
 	session->commands = NULL;
 	session->lexer_list = NULL;
+	session->reset_program = false;
 	session->pid = NULL;
 	session->heredoc = false;
-	session->reset_program = false;
 	g_global.stop_heredoc = 0;
 	g_global.in_cmd = 0;
 	g_global.in_heredoc = 0;
+	//TODO: seems like this part is not running the second time
 	init_session_path(session);
 	init_session_signals();
+	printf("INIT SESSION\n");
 	return (1);
 }
 

@@ -60,18 +60,18 @@ int		parse_input(t_session *session)
 	t_tokens	ttype;
 
 	pos = 0;
-	while (session->args[pos])
+	while (session->arg[pos])
 	{
-		pos += skip_whitespace(session->args, pos);
-		ttype = identify_token(session->args, pos);
+		pos += skip_whitespace(session->arg, pos);
+		ttype = identify_token(session->arg, pos);
 		if (ttype != NO_TOKEN)
-			move = handle_token(session->args, pos, &session->lexer_list, ttype);
+			move = handle_token(session->arg, pos, &session->lexer_list, ttype);
 		else
-			move = parse_words(pos, session->args, &session->lexer_list);
+			move = parse_words(pos, session->arg, &session->lexer_list);
 		if (move <= 0)
 			return (0);
 		pos += move;
-		if (!session->args[pos])
+		if (!session->arg[pos])
 			break;
 	}
 	return (1);

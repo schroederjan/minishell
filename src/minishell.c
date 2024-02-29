@@ -6,7 +6,7 @@
 /*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:30:06 by jschroed          #+#    #+#             */
-/*   Updated: 2024/02/27 08:36:07 by jschroed         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:39:07 by jschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,39 @@ int	minishell(t_session *session)
 {
 	char	*tmp;
 
-	session->args = readline(PROMPT);
-	tmp = ft_strtrim(session->args, " ");
-	free(session->args);
-	session->args = tmp;
-	if (!session->args)
+	session->arg = readline(PROMPT);
+	tmp = ft_strtrim(session->arg, " \t\n\v\f\r");
+	free(session->arg);
+	session->arg = tmp;
+	if (!session->arg)
 	{
 		ft_putendl_fd("exit", STDOUT_FILENO);
 		exit(EXIT_SUCCESS);
 	}
 
 	// special case?
-	if (session->args[0] == '\0')
-		return (reset_session(session));
+	if (session->arg[0] == '\0')
+	{
+		printf("inside_minishell reset_session\n");
+		return 1;
+		/* return (reset_session(session)); */
+	}
+	add_history(session->arg);
 
 	// TODO: implement
-	/* add_history(session->args); */
-	// TODO: implement
-	/* if (!count_quotes(session->args)) */
+	/* if (!count_quotes(session->arg)) */
 	/*     return (ft_error(2, session)); */
-	// TODO: implement
+
 	if (!parse_input(session))
-	{
-		exit(EXIT_FAILURE);
-		/* return (ft_error(1, session)); */
-	}
+		return (EXIT_FAILURE);
+
 	// TODO: implement
 	/* parser(session); */
 	// TODO: implement
 	/* prepare_executor(session); */
 
+	printf("end reset_session\n");
 	reset_session(session);
 	return (1);
 }
+

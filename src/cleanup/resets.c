@@ -15,6 +15,8 @@ void	reset_commands(t_commands **commands_lst)
 			reset_lexer(&(current->redirections));
 		if (current->str != NULL)
 			free_arr(current->str);
+		free(current->str); // Frees the array of strings itself
+		current->str = NULL;
 		if (current->heredocs_file_name != NULL)
 			free(current->heredocs_file_name);
 		free(current);
@@ -42,10 +44,13 @@ void	reset_lexer(t_lexer **lexer_lst)
 	*lexer_lst = NULL;
 }
 
+
+
 int		reset_session(t_session *session)
 {
+	printf("inside reset_session\n");
 	reset_commands(&session->commands);
-	free(session->args);
+	free(session->arg);
 	if (session->pid)
 		free(session->pid);
 	free_arr(session->paths);

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   handle_env.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/22 09:49:07 by jschroed          #+#    #+#             */
-/*   Updated: 2024/02/28 09:25:21 by jschroed         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 static char		*find_path_var(char **env)
@@ -37,7 +25,7 @@ static char		*ensure_trailing_slash(const char *path)
 {
 	size_t path_len;
 
-	path_len = strlen(path);
+	path_len = ft_strlen(path);
 	if (path[path_len - 1] != '/') 
 	{
 		char *new_path = malloc(path_len + 2);
@@ -49,7 +37,7 @@ static char		*ensure_trailing_slash(const char *path)
 		}
 		return (new_path);
 	}
-	return strdup(path);
+	return ft_strdup(path);
 }
 
 static int	update_paths(char **paths) 
@@ -81,7 +69,8 @@ int		init_session_path(t_session *session)
 		return (EXIT_FAILURE);
 	session->paths = ft_split(path_from_env, ':');
 	free(path_from_env);
-
+	printf("INIT SESSION PATH\n");
+	printf("session->paths: %s\n", session->paths[0]);
 	if (!session->paths || update_paths(session->paths) == EXIT_FAILURE)
 	{
 		free_arr(session->paths);

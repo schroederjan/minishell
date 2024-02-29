@@ -6,22 +6,26 @@
 /*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 09:36:52 by jschroed          #+#    #+#             */
-/*   Updated: 2024/02/22 09:42:15 by jschroed         ###   ########.fr       */
+/*   Updated: 2024/02/29 17:08:31 by jschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void free_arr(char **arr) 
+void free_arr(char **arr)
 {
-	size_t i = 0;
-	if (arr != NULL) {
-		while (arr[i] != NULL) {
-			free(arr[i]);
-			i++;
-		}
-		free(arr);
+	size_t i;
+
+	i = 0;
+	if (arr == NULL)
+		return ;
+	while (arr[i] != NULL)
+	{
+		printf("inside free_arr, %s\n", arr[i]);
+		free(arr[i]);
+		i++;
 	}
+	free(arr);
 }
 
 char **ft_arrdup(char **arr) 

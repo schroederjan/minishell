@@ -6,7 +6,7 @@
 /*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 11:49:23 by jschroed          #+#    #+#             */
-/*   Updated: 2024/02/27 08:56:12 by jschroed         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:20:07 by jschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_parser
 
 typedef struct s_session
 {
-	char				*args;
+	char				*arg;
 	char				**paths;
 	char				**env;
 	struct s_commands	*commands;
@@ -74,8 +74,7 @@ typedef struct s_session
 
 typedef struct s_commands
 {
-	char				**str; // eg. echo a
-						// builtin_arr
+	char				**str;
 	int					(*builtin)(t_session *, struct s_commands *); // eg. echo
 	int					num_redirections;
 	char				*heredocs_file_name;
