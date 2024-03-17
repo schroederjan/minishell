@@ -1,74 +1,41 @@
 NAME = minishell
 
-# VARS
-# ####
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+RM = rm -f
 
-MKDIR = mkdir
-CC = gcc
-CFLAGS	= -Wall -Werror -Wextra
+LIBFT_PATH = libs/libft
+LIBFT = $(LIBFT_PATH)/libft.a
 
-PATH_OBJS = build/objs/
-PATH_LIBFT = libs/libft
+READLINE_PATH = /usr/include/readline
+READLINE_LIB = -lreadline
 
-PATHS = src/
-PATH_LEXER = $(PATHS)lexer/
-PATH_PARSER = $(PATHS)parser/
-PATH_BUILTINS = $(PATHS)builtins/
-PATH_EXPANDER = $(PATHS)expander/
-PATH_UTILS = $(PATHS)utils/
-PATH_CLEANUP = $(PATHS)cleanup/
-PATH_INIT = $(PATHS)init/
-PATH_EXECUTOR = $(PATHS)executor/
+SRC_FILES = $(shell find $(SRC_DIR) -name '*.c' -exec basename {} \;)
+SRC_DIR = src
+OBJ_DIR = obj
 
-VPATH = $(PATHS):\
-	$(PATH_LEXER):\
-	$(PATH_PARSER):\
-	$(PATH_BUILTINS):\
-	$(PATH_EXPANDER):\
-	$(PATH_UTILS):\
-	$(PATH_CLEANUP):\
-	$(PATH_INIT):\
-	$(PATH_EXECUTOR)
-
-SRCS = $(shell find $(PATHS) -type f -name '*.c')
-OBJS = $(SRCS:$(PATHS)%.c=$(PATH_OBJS)%.o)
-OBJ_DIRS = $(dir $(OBJS))
-
-LIBFT = $(PATH_LIBFT)/libft.a
-HEADERS = $(shell find ./includes -iname "*.h")
-
-READLINE_LIB = -lreadline -lhistory -ltermcap
-INCLUDES = -Iincludes -I$(PATH_LIBFT)
-
-# COMMANDS
-# ########
+SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
 all: $(NAME)
 
-$(OBJ_DIRS):
-	@$(MKDIR) -p $@
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) -o $@ $^ -I$(READLINE_PATH) $(READLINE_LIB)
 
-$(PATH_OBJS)%.o: %.c $(HEADERS) | $(OBJ_DIRS)
-	@echo "Compiling $<..."
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-$(NAME): $(LIBFT) $(OBJS) $(HEADERS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBFT) $(READLINE_LIB)
-	@echo "\n\033[33;1;3mMinishell ready!\033[0m"
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@ -I$(READLINE_PATH)
 
 $(LIBFT):
-	@echo "Making libft..."
-	@$(MAKE) -C $(PATH_LIBFT)
+	$(MAKE) -C $(LIBFT_PATH)
 
 clean:
-	@echo "Removing .o object files..."
-	@rm -rf $(PATH_OBJS)
-	@make fclean -C $(PATH_LIBFT)
+	$(RM) $(OBJS)
+	$(MAKE) -C $(LIBFT_PATH) clean
 
 fclean: clean
-	@echo "Removing minishell..."
-	@rm -f $(NAME)
-
+	$(RM) $(NAME)
+	$(MAKE) -C $(LIBFT_PATH) fclean
 re: fclean all
 
 norm:
@@ -77,8 +44,5 @@ norm:
 
 val:
 	@valgrind --track-fds=yes ./minishell
-
-# CONFIGS
-# #######
 
 .PHONY: all clean fclean re norm

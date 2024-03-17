@@ -1,7 +1,7 @@
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-t_tokens	identify_token(const char *str, int pos) 
+t_tokens	token_identify(const char *str, int pos) 
 {
 	if (str[pos] == '|')
 		return PIPE_MAP;

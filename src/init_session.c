@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 int	init_session(t_session *session)
 {
@@ -10,7 +10,6 @@ int	init_session(t_session *session)
 	g_global.stop_heredoc = 0;
 	g_global.in_cmd = 0;
 	g_global.in_heredoc = 0;
-	//TODO: seems like this part is not running the second time
 	init_session_path(session);
 	init_session_signals();
 	printf("INIT SESSION\n");

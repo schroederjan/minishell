@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 t_lexer	 *ft_lexer_new_node(char *str, int token)
 {

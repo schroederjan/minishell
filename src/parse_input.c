@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 static int		is_whitespace(char c)
 {
@@ -32,7 +32,7 @@ static int		parse_words(int start_pos, char *str, t_lexer **lexer_list)
     char	*word;
 
 	len = 0;
-	while (str[start_pos + len] && !identify_token(str, start_pos + len))
+	while (str[start_pos + len] && !token_identify(str, start_pos + len))
 	{
 		if (str[start_pos + len] == '"' || str[start_pos + len] == '\'') 
 			len += skip_quotes(start_pos + len, str, str[start_pos + len]);
@@ -63,9 +63,9 @@ int		parse_input(t_session *session)
 	while (session->arg[pos])
 	{
 		pos += skip_whitespace(session->arg, pos);
-		ttype = identify_token(session->arg, pos);
+		ttype = token_identify(session->arg, pos);
 		if (ttype != NO_TOKEN)
-			move = handle_token(session->arg, pos, &session->lexer_list, ttype);
+			move = token_add(session->arg, pos, &session->lexer_list, ttype);
 		else
 			move = parse_words(pos, session->arg, &session->lexer_list);
 		if (move <= 0)

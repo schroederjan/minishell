@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 void	reset_commands(t_commands **commands_lst)
 {
@@ -53,7 +53,7 @@ int		reset_session(t_session *session)
 	free(session->arg);
 	if (session->pid)
 		free(session->pid);
-	free_arr(session->paths);
+	session->paths = NULL;
 	init_session(session);
 	session->reset_program = true;
 	minishell(session);

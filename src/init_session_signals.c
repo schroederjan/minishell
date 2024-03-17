@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 static int		event(void) {
 	return EXIT_SUCCESS;
