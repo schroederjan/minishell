@@ -37,7 +37,8 @@ OBJ_DIRS = $(dir $(OBJS))
 LIBFT = $(PATH_LIBFT)/libft.a
 HEADERS = $(shell find ./includes -iname "*.h")
 
-READLINE_LIB = -lreadline -lhistory -ltermcap
+# READLINE_LIB = -lreadline -lhistory -ltermcap
+READLINE_LIB = -lreadline -lhistory
 INCLUDES = -Iincludes -I$(PATH_LIBFT)
 
 # COMMANDS
