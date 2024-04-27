@@ -1,5 +1,5 @@
 
-#include "executor.h"
+#include "../includes/executor.h"
 
 t_simple_cmds	*call_expander(t_tools *tools, t_simple_cmds *cmd)
 {
@@ -67,6 +67,17 @@ int	check_fd_heredoc(t_tools *tools, int end[2], t_simple_cmds *cmd)
 	return (fd_in);
 }
 
+/**
+ * Executes a series of simple commands using the given tools.
+ * 
+ * This function takes a pointer to a struct `t_tools` which contains information
+ * about the commands to be executed. It iterates through the list of simple commands
+ * in the `t_tools` struct, expanding any variables or special characters, setting up
+ * pipes if necessary, and forking processes to execute the commands.
+ * 
+ * @param tools A pointer to a `t_tools` struct containing the commands to be executed
+ * @return Returns 0 on success
+ */
 int	executor(t_tools *tools)
 {
 	int		end[2];
@@ -93,3 +104,4 @@ int	executor(t_tools *tools)
 	tools->simple_cmds = ft_simple_cmdsfirst(tools->simple_cmds);
 	return (0);
 }
+

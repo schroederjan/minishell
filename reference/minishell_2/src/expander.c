@@ -1,5 +1,5 @@
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 #include "builtins.h"
 
 int	loop_if_dollar_sign(t_tools *tools, char *str, char **tmp, int j)

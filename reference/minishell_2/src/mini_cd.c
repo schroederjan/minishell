@@ -1,6 +1,6 @@
 
 // #include "minishell.h"
-#include "builtins.h"
+#include "../includes/builtins.h"
 
 char	*find_path_ret(char *str, t_tools *tools)
 {

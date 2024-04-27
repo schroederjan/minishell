@@ -1,5 +1,5 @@
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int	minishell_loop(t_tools *tools);
 
@@ -31,40 +31,6 @@ int	reset_tools(t_tools *tools)
 	return (1);
 }
 
-/*
-The `prepare_executor` function is responsible for setting up the execution of
-commands. Here is a breakdown of the code:
-
-1. `signal(SIGQUIT, sigquit_handler);`: This line sets up a signal handler for
-the SIGQUIT signal. When the SIGQUIT signal is received, the `sigquit_handler`
-function will be called.
-
-2. `g_global.in_cmd = 1;`: This line sets a global variable `in_cmd` to 1,
-indicating that a command is currently being executed.
-
-3. `if (tools->pipes == 0)`: This condition checks if there are no pipes in the
-command. If there are no pipes, it calls the `single_cmd` function with the
-`simple_cmds` and `tools` as arguments.
-
-4. `else`: If there are pipes in the command, the following steps are executed:
-   - `tools->pid = ft_calloc(sizeof(int), tools->pipes + 2);`: Allocate memory
-for an array of integers to store process IDs. The size of the array is
-`tools->pipes + 2`.
-   - `if (!tools->pid) return (ft_error(1, tools));`: Check if the memory
-allocation was successful. If not, return an error.
-   - `executor(tools);`: Call the `executor` function with `tools` as an
-argument to execute the command with pipes.
-
-5. `g_global.in_cmd = 0;`: Set the global variable `in_cmd` back to 0,
-indicating that the command execution has finished.
-
-6. `return (EXIT_SUCCESS);`: Return `EXIT_SUCCESS` to indicate that the function
-executed successfully.
-
-Overall, the `prepare_executor` function prepares for the execution of commands,
-sets up signal handling, allocates memory for process IDs if needed, and then
-calls the appropriate function to execute the command.
-*/
 int	prepare_executor(t_tools *tools)
 {
 	signal(SIGQUIT, sigquit_handler);
