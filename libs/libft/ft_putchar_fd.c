@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiwang <xiwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/13 10:09:33 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/16 19:44:30 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/17 16:08:51 by xiwang            #+#    #+#             */
+/*   Updated: 2023/05/23 18:05:53 by xiwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,3 +16,11 @@ void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
 }
+
+/*int	main(void)
+{
+	ft_putchar_fd('1', 0);
+	return 0;
+}
+//0：standard input. 1:standard output. 2: standard error
+*/

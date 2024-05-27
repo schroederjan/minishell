@@ -1,68 +1,58 @@
-/*usr/bin/cc -Wall -Wextra -Werror -g "$0" && exec ./a.out "$@"*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiwang <xiwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 21:02:43 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/08 21:20:47 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/09 18:56:43 by xiwang            #+#    #+#             */
+/*   Updated: 2023/05/24 19:29:39 by xiwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <string.h>
+#include <stdio.h>
 
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+/*
+If little is an empty string, big is returned;
+if little occurs nowhere in big, NULL is returned;
+otherwise a pointer to the first character of the first
+occurrence of little is returned.
+*/
+
+char	*ft_strnstr(const char *s1, const char *s2, size_t len)
 {
-	size_t	i;
-	size_t	little_len;
-	size_t	big_len;
+	size_t			i;
+	size_t			k;
+	unsigned char	*ret;
 
 	i = 0;
-	little_len = ft_strlen(little);
-	big_len = ft_strlen(big);
-	if (*little == 0)
-		return ((char *)big);
-	while (i + little_len <= len && i + little_len <= big_len)
+	if (*s2 == 0)
+		return ((char *)s1);
+	ret = (unsigned char *)s1;
+	while (ret[i] && i < len)
 	{
-		if (!ft_strncmp(big + i, little, little_len))
-			return ((char *)big + i);
+		k = 0;
+		if (ret[i] == s2[k])
+		{
+			while (ret[i + k] == s2[k] && i + k < len)
+			{
+				k++;
+				if (s2[k] == 0)
+					return (&((char *)s1)[i]);
+			}
+		}
 		i++;
 	}
 	return (NULL);
 }
 
-/* #include <stdio.h> */
-/* int	main(void) */
-/* { */
-/*     const char *big = "hi this is a test"; */
-/*     const char *little = "is"; */
-/*     size_t len = ft_strlen(big); */
-/*  */
-/*     printf("%s\n", ft_strnstr(big, little, len)); */
-/* } */
-/*  */
-/* // temp func for this main */
-/* size_t	ft_strlen(const char *s) */
-/* { */
-/*     size_t	i; */
-/*  */
-/*     i = 0; */
-/*     while (*s++) */
-/*         i++; */
-/*     return (i); */
-/* } */
-/*  */
-/* // temp func for this main */
-/* int	ft_strncmp(const char *s1, const char *s2, size_t n) */
-/* { */
-/*     while (n--) */
-/*     { */
-/*         if (*s1 != *s2 || !*s1 || !*s2) */
-/*             return (*s1 - *s2); */
-/*         s1++; */
-/*         s2++; */
-/*     } */
-/*     return (0); */
-/* } */
+/*int main()
+{
+	char str1[] = "aaabcabcd";
+	char str2[] = "aaabc";
+
+	printf("Lib's:  %s\n", strnstr(str1, str2, 5));
+	printf("Mine's: %s\n", ft_strnstr(str1, str2, 5));
+	return 0;
+}*/

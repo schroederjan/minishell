@@ -1,63 +1,55 @@
-/*usr/bin/cc -Wall -Wextra -Werror -g "$0" && exec ./a.out "$@"*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiwang <xiwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 18:15:52 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/09 19:25:09 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/15 20:04:56 by xiwang            #+#    #+#             */
+/*   Updated: 2023/05/25 16:03:39 by xiwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdint.h>
 
-void	*ft_calloc(size_t num, size_t size)
+/*
+Have to #include <stdint.h>//for SIZE_MAX
+malloc then filled with zeros.
+*/
+/*void	*ft_bzero(void *s, size_t n)
 {
 	void	*ret;
 
-	if (num != 0 && SIZE_MAX / num < size)
+	ret = s;
+	if (n == 0)
+		return (ret);
+	while (n--)
+		*(unsigned char *)s++ = 0;
+	return (ret);//return pair with void *func
+}*/
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*ret;
+
+	if (count != 0 && SIZE_MAX / count < size)
 		return (NULL);
-	ret = malloc(size * num);
-	if (!ret)
-		return (NULL);
-	ft_bzero(ret, size * num);
+	ret = malloc(count * size);
+	if (ret == NULL)
+		return (ret);
+	ft_bzero(ret, size * count);
 	return (ret);
 }
 
-/* // only temp for main */
-/* void	ft_bzero(void *s, size_t n) */
-/* { */
-/*     unsigned char	*dest; */
-/*     size_t			i; */
-/*  */
-/*     dest = s; */
-/*     i = 0; */
-/*     while(i++ < n) */
-/*         *dest++ = 0; */
-/* } */
-/*  */
-/* #include <stdio.h> */
-/* int	main(void) */
-/* { */
-/*     int *arr; */
-/*     int n = 10;  // size of the array */
-/*  */
-/*     // allocate and zero-initialize an array of 10 integers */
-/*     arr = ft_calloc(n, sizeof(int)); */
-/*     if (!arr) { */
-/*         printf("Memory allocation failed\n"); */
-/*         return 1; */
-/*     } */
-/*  */
-/*     // print the array elements */
-/*     for (int i = 0; i < n; i++) { */
-/*         printf("%d ", arr[i]); */
-/*     } */
-/*  */
-/*     // free the allocated memory */
-/*     free(arr); */
-/*  */
-/*     return 0; */
-/* } */
+/*int main(void)
+{
+	printf("%zu\n", SIZE_MAX);//to check the number in this system
+    size_t size = 10;
+    int *arr = (int *)ft_calloc(size, sizeof(int));
+
+    for (size_t i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    free(arr);
+    return 0;
+}*/

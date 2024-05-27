@@ -1,45 +1,56 @@
-/*usr/bin/cc -Wall -Wextra -Werror -g "$0" && exec ./a.out "$@"*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiwang <xiwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 19:09:59 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/09 19:20:04 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/09 18:47:28 by xiwang            #+#    #+#             */
+/*   Updated: 2023/05/24 19:03:06 by xiwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
-{
-	unsigned char	*dest;
-	size_t			i;
+/*
+1. Writes n zeroed bytes to the string s.
+2. If n is zero, bzero() does nothing.
+Notes: void pointer cannot be dereferenced.
 
-	dest = s;
-	i = 0;
-	while (i++ < n)
-		*dest++ = 0;
+why cast to char: to operate on a byte-by-byte basis.
+To ensures the pointer points to a single byte of memory
+(since char is guaranteed to be 1 byte in C).
+
+
+*/
+void	*ft_bzero(void *s, size_t n)
+{
+	void	*ret;
+
+	ret = s;
+	if (n == 0)
+		return (ret);
+	while (n--)
+		*(unsigned char *)s++ = 0;
+	return (ret);
 }
 
-/* #include <stdio.h> */
-/* #include <string.h> */
-/* #include <stdlib.h> */
-/*  */
-/* int	main(void) */
-/* { */
-/*     char	*s = malloc(sizeof(char) * 3); */
-/*     size_t	n = 2; */
-/*  */
-/*     strcpy(s, "hi"); // cp string literal to pinter */
-/*     ft_bzero(s, n); // set to zero */
-/*     for (size_t i = 0; i < n; i++) { */
-/*         printf("%d ", s[i]); */
-/*     } */
-/*  */
-/*     free(s); // Don't forget to free the memory */
-/*  */
-/*     return 0; */
-/* } */
+/*int main(void)
+{
+	char str1[100] = "Hello, world!";
+	char str2[100] = "Hello, world!";
+
+	// Use memset to initialize str1
+	memset(str1, 0, sizeof(str1));
+	// Use ft_bzero to initialize str2
+	ft_bzero(str2, sizeof(str2));
+
+	// Compare the results
+	if (memcmp(str1, str2, sizeof(str1)) == 0)
+		printf("ft_bzero works correctly.\n");
+	else
+		printf("ft_bzero does not work correctly.\n");
+
+	return 0;
+}*/

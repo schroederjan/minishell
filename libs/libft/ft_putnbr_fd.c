@@ -1,55 +1,55 @@
-/*usr/bin/cc -Wall -Wextra -Werror -g "$0" && exec ./a.out "$@"*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiruwang <xiruwang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/16 19:28:25 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/16 19:33:56 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/17 16:09:09 by xiwang            #+#    #+#             */
+/*   Updated: 2024/05/19 20:28:30 by jschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <limits.h>
 #include "libft.h"
 
-static unsigned int	remove_sign(int n)
+/*void	ft_putchar_fd(char c, int fd)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
-}
+	write(fd, &c, 1);
+}*/
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	unsigned int	num;
-
 	if (n < 0)
-		ft_putchar_fd('-', fd);
-	num = remove_sign(n);
-	if (num > 9)
 	{
-		ft_putnbr_fd(num / 10, fd);
-		ft_putnbr_fd(num % 10, fd);
+		write(fd, "-", 1);
+		if (n == -2147483648)
+		{
+			write(fd, "214748364", 9);
+			write(fd, "8", 1);
+		}
+		n = -n;
 	}
-	else
-		ft_putchar_fd(num + '0', fd);
+	if (n <= 9 && n >= 0)
+		ft_putchar_fd(n + 48, fd);
+	if (n > 9)
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putnbr_fd(n % 10, fd);
+	}
 }
 
-/* // temp for main */
-/* void	ft_putchar_fd(char c, int fd) */
-/* { */
-/*     write(fd, &c, 1); */
-/* } */
-/*  */
-/* int	main(void) */
-/* { */
-/*     int i; */
-/*  */
-/*     for (i = -10; i <= 10; i++) */
-/*     { */
-/*         ft_putnbr_fd(i, 1); */
-/*         write(1, "\n", 1); */
-/*     } */
-/* } */
+/*int main()
+{
+	printf("Maximum value of int: %d\n", INT_MAX);
+	printf("Maximum value of int: %d\n", INT_MIN);
+
+	int a = 2147483647;
+	int b = -2147483648;
+	ft_putnbr_fd(a, 0);
+	write(1, "\n", 1);
+	ft_putnbr_fd(b, 0);
+	write(1, "\n", 1);
+	ft_putnbr_fd(-42, 0);
+	return 0;
+}*/

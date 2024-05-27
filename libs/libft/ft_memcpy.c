@@ -1,36 +1,60 @@
-/*usr/bin/cc -Wall -Wextra -Werror -g "$0" && exec ./a.out "$@"*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiwang <xiwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/07 11:08:15 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/07 13:49:28 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/09 18:52:23 by xiwang            #+#    #+#             */
+/*   Updated: 2023/05/24 19:21:08 by xiwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
 #include "libft.h"
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+/*
+1. we can NOT dereference a void pointer
+2. Posibble mistake: *dst++ /
+*/
+
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	unsigned char	*d;
 
-	d = (unsigned char *)dest;
+	d = (unsigned char *)dst;
 	if (!d && !src)
 		return (NULL);
 	while (n--)
 		*d++ = *((unsigned char *)src++);
-	return (dest);
+	return (dst);
 }
 
-/* #include <stdio.h> */
-/* int	main(void) */
-/* { */
-/*     char dest[5] = "12345"; */
-/*     const char *src = "abcde"; */
-/*     size_t	n = 10; */
-/*  */
-/*     printf("%s\n", (unsigned char *)ft_memcpy(dest, src, n)); */
-/* } */
+/*int main()
+{
+	const char src[50] = "gentlebattle.com";
+	char dest[50] = "hello,world";
+
+	printf("Before memcpy dest = %s\n", dest);
+	printf("After ft_memcpy dest = %s\n", (char *)ft_memcpy(dest, src, 5));
+	printf("After memcpy dest = %s\n", (char *)memcpy(dest, src, 5));
+
+	return (0);
+}
+//if (!d || !s) WRONG
+*/
+
+/*int main()
+{
+
+	int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+	int i = 0;
+
+	ft_memcpy(arr + 2, arr, 20);
+	while (i < 10)
+	{
+		printf("%d\n", arr[i]);
+		i++;
+	}
+	return (0);
+}*/

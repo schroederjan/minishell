@@ -1,49 +1,52 @@
-/*usr/bin/cc -Wall -Wextra -Werror -g "$0" && exec ./a.out "$@"*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiwang <xiwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/02 18:37:37 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/22 18:35:00 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/15 20:05:12 by xiwang            #+#    #+#             */
+/*   Updated: 2023/05/24 19:31:52 by xiwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_isspace(int c)
-{
-	return ((c >= 9 && c <= 13) || c == 32);
-}
+/*
+NOTE: 'Normal' atoi NOT 42 ATOI. eg. ft_atoi("-+42") == 0
+normal atoi cannot handle more than one '-'/'+' sign before the numbers
+converts char number (a string) to int
+*/
 
 int	ft_atoi(const char *str)
 {
-	int		sign;
-	long	number;
+	int	res;
+	int	sign;
 
-	number = 0;
+	res = 0;
 	sign = 1;
-	while (ft_isspace(*str))
-		++str;
-	if (*str == '+' || *str == '-')
-		if (*(str++) == '-')
-			sign *= -1;
-	while (ft_isdigit(*str))
-		number = number * 10 + sign * (*str++ - '0');
-	return ((int)number);
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if (*str == '+')
+		str++;
+	else if (*str == '-')
+	{
+		sign = -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		res = res * 10 + (*str - '0');
+		str++;
+	}
+	return (res * sign);
 }
 
-/* // temp for main */
-/* #include <stdio.h> */
-/*  */
-/* int	ft_isdigit(int c) */
-/* { */
-/*     return (c >= '0' && c <= '9'); */
-/* } */
-/*  */
-/* int	main(void) */
-/* { */
-/*     printf("%d\n", ft_atoi("42")); */
-/* }	 */
+/*int main(void)
+{
+    char str[] = "+-42";
+    printf("%d\n", ft_atoi(str));//0
+    printf("%d\n", atoi(str));//0
+
+    return 0;
+}*/

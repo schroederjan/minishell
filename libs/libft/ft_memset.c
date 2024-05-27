@@ -1,24 +1,28 @@
-/*usr/bin/cc -Wall -Wextra -Werror -g "$0" && exec ./a.out "$@"*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiwang <xiwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 19:15:05 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/05 08:31:11 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/15 20:05:58 by xiwang            #+#    #+#             */
+/*   Updated: 2023/05/23 18:03:01 by xiwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stddef.h>
 
-void	*ft_memset(void *b, int c, size_t n)
+void	*ft_memset(void *s, int c, size_t n)
 {
 	void	*ret;
 
-	ret = b;
+	ret = s;
 	while (n--)
-		*(char *)b++ = (unsigned char)c;
+	{
+		*(unsigned char *)s = (unsigned char)c;
+		s++;
+	}
 	return (ret);
 }
+/*(unsigned char *)s: cast then dereference to get its value
+*/

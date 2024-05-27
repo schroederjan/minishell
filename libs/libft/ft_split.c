@@ -1,23 +1,29 @@
-/*usr/bin/cc -Wall -Wextra -Werror -g "$0" && exec ./a.out "$@"*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiwang <xiwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 19:15:39 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/11 19:21:54 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/12 18:38:58 by xiwang            #+#    #+#             */
+/*   Updated: 2023/05/25 15:59:46 by xiwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+/*
+steps:
+1. Go thru the str, count how many words inside of the string
+2. count the length of each word in order to allocate
+3. loop thru the string,
+use same logic(step 1)to copy and put each word: put_word()
+4. handle allocation failed for each word: handle_malloc_err()
+5. End 1-d with a NULL pointer
+*/
 
-// aa bb cc -> 3 words
-
-static int	count_words(char const *s, char c)
+static size_t	count_words(char const *s, char c)
 {
-	int	count;
+	size_t	count;
 
 	count = 0;
 	while (*s)
@@ -34,18 +40,19 @@ static int	count_words(char const *s, char c)
 	return (count);
 }
 
-static char	*make_word(char const *s, char c)
+static char	*put_word(char const *s, char c)
 {
 	char	*word;
-	int		i;
+	size_t	len;
+	size_t	i;
 
+	len = 0;
 	i = 0;
-	while (s[i] && s[i] != c)
-		i++;
-	word = (char *)malloc(sizeof(char) * (i + 1));
-	if (!word)
+	while (s[len] && s[len] != c)
+		len++;
+	word = (char *)malloc(sizeof(char) * (len + 1));
+	if (word == NULL)
 		return (NULL);
-	i = 0;
 	while (s[i] && s[i] != c)
 	{
 		word[i] = s[i];
@@ -55,30 +62,30 @@ static char	*make_word(char const *s, char c)
 	return (word);
 }
 
-static char	**ft_malloc_error(char **tab)
+static char	**handle_malloc_err(char **words)
 {
 	int	i;
 
 	i = 0;
-	while (tab[i])
+	while (words[i])
 	{
-		free(tab[i]);
+		free(words[i]);
 		i++;
 	}
-	free(tab);
+	free(words);
 	return (NULL);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**tab;
-	int		i;
+	char	**words;
+	size_t	i;
 
 	i = 0;
-	if (!s)
-		return (0);
-	tab = (char **)malloc(sizeof(char *) * (count_words(s, c) + 1));
-	if (!tab)
+	if (s == NULL)
+		return (NULL);
+	words = (char **)malloc(sizeof(char *) * (count_words(s, c) + 1));
+	if (words == NULL)
 		return (NULL);
 	while (*s)
 	{
@@ -86,14 +93,35 @@ char	**ft_split(char const *s, char c)
 			s++;
 		if (*s)
 		{
-			tab[i] = make_word(s, c);
-			if (!tab[i])
-				return (ft_malloc_error(tab));
+			words[i] = put_word(s, c);
+			if (words[i] == NULL)
+				return (handle_malloc_err(words));
 			i++;
 			while (*s && *s != c)
 				s++;
 		}
 	}
-	tab[i] = 0;
-	return (tab);
+	words[i] = NULL;
+	return (words);
 }
+
+/*
+int main()
+{
+	//char input[] = " a bb";
+	//char **result = ft_split(input, ' ');
+	char **result = ft_split("^^^1^^2a,^^^^3^^^^--h^^^^", '^');
+	int i;
+
+	// Accessing individual strings in the array
+	i = 0;
+	while (result[i])
+	{
+		printf("%s\n", result[i]);
+		free(result[i]);
+		i++;
+	}
+	free(result);
+	return 0;
+}
+*/

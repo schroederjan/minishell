@@ -1,41 +1,55 @@
-/*usr/bin/cc -Wall -Wextra -Werror -g "$0" && exec ./a.out "$@"*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiwang <xiwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 07:49:14 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/08 07:58:28 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/09 18:40:57 by xiwang            #+#    #+#             */
+/*   Updated: 2023/05/24 19:07:12 by xiwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
 #include "libft.h"
+
+/*compare two memory block
+1. The memcmp() function compares byte string s1 against byte string s2.
+Both strings are assumed to be n bytes long.
+2. Returns the difference between the first two differing bytes
+3. Comparing exactly n bytes, regardless of their content.
+*/
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	unsigned char	*ps1;
-	unsigned char	*ps2;
+	unsigned char	*p1;
+	unsigned char	*p2;
 
-	ps1 = (unsigned char *)s1;
-	ps2 = (unsigned char *)s2;
-	while (n--)
+	p1 = (unsigned char *)s1;
+	p2 = (unsigned char *)s2;
+	if (n == 0)
+		return (0);
+	while (*p1 == *p2 && --n)
 	{
-		if (*ps1 != *ps2)
-			return (*ps1 - *ps2);
-		ps1++;
-		ps2++;
+		p1++;
+		p2++;
 	}
-	return (0);
+	return (*p1 - *p2);
 }
 
-/* #include <stdio.h> */
-/* int	main(void) */
-/* { */
-/*     char	*s1 = "a"; */
-/*     char	*s2 = "z"; */
-/*     size_t	n = 1; */
-/*  */
-/*     printf("%d\n", ft_memcmp(s1, s2, n)); */
-/* } */
+/*
+int main()
+{
+    char str1[] = "Hello, world!";
+    char str2[] = "HEllo, world!";
+
+    printf("Mine:%d, Lib's:%d\n",\
+     ft_memcmp(str1, str2, 1), memcmp(str1, str2, 1));
+    return 0;
+}
+*/
+
+/*
+comparing exactly n bytes, regardless of their content.
+memcmp 可以用来比较任意两个内存区域的值，而不仅限于字符串，而 strcmp 只能比较字符串。
+*/

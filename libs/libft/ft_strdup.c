@@ -1,61 +1,41 @@
-/*usr/bin/cc -Wall -Wextra -Werror -g "$0" && exec ./a.out "$@"*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiwang <xiwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 08:50:38 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/09 08:50:40 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/09 18:54:44 by xiwang            #+#    #+#             */
+/*   Updated: 2024/05/15 19:11:27 by jschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s1)
+/*
+1. malloc pace
+2. strlcpy
+3. return a pointer to the new string
+If the memory allocation fails, strdup returns a null pointer.
+*/
+
+char	*ft_strdup(const char *s)
 {
-	char	*dup;
+	char	*ret;
 	size_t	len;
 
-	len = ft_strlen(s1);
-	dup = malloc(sizeof(char) * (len + 1));
-	if (!dup)
+	len = ft_strlen(s) + 1;
+	ret = (char *)malloc(len * sizeof(char));
+	if (ret == NULL)
 		return (NULL);
-	ft_strlcpy(dup, s1, len + 1);
-	return (dup);
+	ft_strlcpy(ret, s, len);
+	return (ret);
 }
 
-/* // temp func for main only */
-/* size_t	ft_strlen(const char *s) */
-/* { */
-/*     size_t	i; */
-/*  */
-/*     i = 0; */
-/*     while (*s++) */
-/*         i++; */
-/*     return (i); */
-/* } */
-/*  */
-/* size_t	ft_strlcpy(char *dest, const char *src, size_t size) */
-/* { */
-/*     size_t	i; */
-/*      */
-/*     i = 0; */
-/*     while (*src && i < size - 1) */
-/*     { */
-/*         *dest++ = *src++; */
-/*         i++; */
-/*     } */
-/*     if (i < size) */
-/*         *dest = 0; */
-/*     while (*src++) */
-/*         i++; */
-/*     return (i); */
-/* } */
-/*  */
-/* #include <stdio.h> */
-/* int	main(void) */
-/* { */
-/*     printf("%s\n", ft_strdup("abc")); */
-/* } */
+/*
+The main difference between strdup and strlcpy is that:
+strdup:allocates new memory and returns a pointer to the new string,
+strlcpy:copies a string into an existing buffer.
+You should use strdup when you want to create a new copy of a string,
+and strlcpy when you want to copy a string into a buffer safely.
+*/

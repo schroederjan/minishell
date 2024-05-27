@@ -1,87 +1,71 @@
-/*usr/bin/cc -Wall -Wextra -Werror -g "$0" && exec ./a.out "$@"*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiwang <xiwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/12 18:08:30 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/12 18:45:52 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/15 15:05:58 by xiwang            #+#    #+#             */
+/*   Updated: 2023/05/25 16:00:42 by xiwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	nbr_len(int nbr)
+static size_t	num_len(int n)
 {
-	int	len;
+	size_t	i;
 
-	len = 0;
-	if (nbr <= 0)
-		len = 1;
-	else
-		len = 0;
-	while (nbr != 0)
-	{
-		nbr /= 10;
-		len++;
-	}
-	return (len);
-}
-
-static int	is_signed(int n)
-{
-	if (n < 0)
+	i = 0;
+	if (n == 0)
 		return (1);
-	else
-		return (0);
-}
-
-static unsigned int	remove_sign(int n)
-{
 	if (n < 0)
-		return (-n);
-	else
-		return (n);
+		i++;
+	while (n != 0)
+	{
+		n = n / 10;
+		i++;
+	}
+	return (i);
 }
 
 char	*ft_itoa(int n)
 {
-	unsigned int	nbr;
-	int				sign;
-	int				len;
-	char			*alpha;
+	char			*ret;
+	size_t			len;
+	unsigned int	num;
 
-	sign = is_signed(n);
-	len = nbr_len(n);
-	nbr = remove_sign(n);
-	alpha = malloc(sizeof(char) * len + 1);
-	if (!alpha)
+	len = num_len(n);
+	if (n < 0)
+		num = -n;
+	else
+		num = n;
+	ret = (char *)malloc(sizeof(char) * (len + 1));
+	if (ret == NULL)
 		return (NULL);
-	alpha[len--] = 0;
-	while (len >= 0)
+	ret[len] = 0;
+	while (len > 0)
 	{
-		alpha[len] = nbr % 10 + '0';
-		nbr /= 10;
+		ret[len - 1] = num % 10 + '0';
+		num = num / 10;
 		len--;
 	}
-	if (sign == 1)
-		alpha[0] = '-';
-	return (alpha);
+	if (n < 0)
+		ret[0] = '-';
+	return (ret);
 }
 
-// temp for main
-//
-/* #include <stdio.h> */
-/*  */
-/* int	main(void) */
-/* { */
-/*     int		n; */
-/*     char	*a; */
-/*  */
-/*     n = -2147483648; */
-/*     a = ft_itoa(n); */
-/*     printf("%s\n", a); */
-/*     free(a); */
-/* } */
+/*int	main(void)
+{
+	int	a;
+	int	b;
+	int	c;
+
+	a = -42;
+	b = -2147483648;
+	c = 2147483647;
+	printf("%s\n", ft_itoa(a));
+	printf("%s\n", ft_itoa(b));
+	printf("%s\n", ft_itoa(c));
+	return (0);
+}*/

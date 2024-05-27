@@ -1,37 +1,45 @@
-/*usr/bin/cc -Wall -Wextra -Werror -g "$0" && exec ./a.out "$@"*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiwang <xiwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 20:45:30 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/08 20:55:35 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/09 18:57:04 by xiwang            #+#    #+#             */
+/*   Updated: 2023/05/24 19:16:17 by xiwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
+#include "libft.h"
+
 char	*ft_strrchr(const char *s, int c)
 {
-	char	*ret;
+	int	i;
 
-	ret = 0;
-	while (1)
+	i = ft_strlen(s);
+	if (c == 0)
+		return ((char *)s + i);
+	while (i >= 0)
 	{
-		if (*s == (unsigned char)c)
-			ret = (char *)s;
-		if (!*s)
-			break ;
-		s++;
+		if (s[i] == (char)c)
+			return ((char *)s + i);
+		i--;
 	}
-	return (ret);
+	return (0);
 }
 
-/* #include <stdio.h> */
-/* int	main(void) */
-/* { */
-/*     const char *s = "ababa"; */
-/*     int c = 'b'; */
-/*  */
-/*     printf("%s\n", ft_strrchr(s, c)); */
-/* } */
+/*int main()
+{
+	char str[] = "Hello";
+	int c = '.';
+
+	printf("Lib's: %s\n", strrchr(str, c));
+	printf("Mine's: %s\n", ft_strrchr(str, c));
+	return 0;
+}
+
+//must be int, NO unsigned/size_t, it will convert to max number
+//=0, index[0]
+// return ‘\0'
+*/

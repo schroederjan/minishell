@@ -1,24 +1,40 @@
-/*usr/bin/cc -Wall -Wextra -Werror -g "$0" && exec ./a.out "$@"*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiwang <xiwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 19:07:20 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/08 19:12:29 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/04 18:13:49 by xiruwang          #+#    #+#             */
+/*   Updated: 2023/05/24 19:13:58 by xiwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
 #include "libft.h"
 
+/*
+returns a pointer to the first occurrence of the character c in the string s.
+*/
 char	*ft_strchr(const char *s, int c)
 {
-	if (s == NULL)
-		return (NULL);
-	while (*s != (unsigned char)c)
-		if (!*s++)
-			return (NULL);
-	return ((char *)s);
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if ((char)c == 0)
+		return ((char *)s);
+	return (0);
 }
+
+/*int main()
+{
+	char str[] = "Hello, world,";
+	int c = ',';
+
+	printf("Lib's:%s\n", strchr(str, c));
+	printf("Mine's:%s\n", ft_strchr(str, c));
+	return 0;
+}*/

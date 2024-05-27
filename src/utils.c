@@ -3,51 +3,88 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiruwang <xiruwang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/22 09:36:52 by jschroed          #+#    #+#             */
-/*   Updated: 2024/03/17 12:10:01 by jschroed         ###   ########.fr       */
+/*   Created: 2024/02/12 19:37:42 by xiruwang          #+#    #+#             */
+/*   Updated: 2024/05/24 08:40:01 by jschroed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void free_arr(char **arr)
+int	is_space(char c)
 {
-	size_t i;
-
-	i = 0;
-	if (arr == NULL)
-		return ;
-	while (arr[i] != NULL)
-	{
-		if (arr[i] != NULL)
-			printf("inside free_arr, %s\n", arr[i]);
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
+	if (c == 32 || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
 }
 
-char **ft_arrdup(char **arr) 
+int	is_str_digit(char *str)
 {
-	size_t i;
-	char **arrdup;
+	int	i;
 
 	i = 0;
-	while (arr[i] != NULL)
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
 		i++;
-	arrdup = ft_calloc(i + 1, sizeof(char *));
-	if (!arrdup)
+	}
+	return (1);
+}
+
+char	**ft_arrdup(char **arr)
+{
+	int		i;
+	int		len;
+	char	**new_arr;
+
+	if (arr == NULL)
+		return (NULL);
+	len = 0;
+	while (arr[len])
+		len++;
+	new_arr = (char **)malloc(sizeof(char *) * (len + 1));
+	if (new_arr == NULL)
 		return (NULL);
 	i = 0;
-	while (arr[i] != NULL) {
-		arrdup[i] = ft_strdup(arr[i]);
-		if (arrdup[i] == NULL) {
-			free_arr(arrdup);
+	while (arr[i])
+	{
+		new_arr[i] = ft_strdup(arr[i]);
+		if (new_arr[i] == NULL)
+		{
+			free_double_ptr(new_arr);
 			return (NULL);
 		}
 		i++;
 	}
-	return arrdup;
+	new_arr[i] = NULL;
+	return (new_arr);
+}
+
+int	if_all_space(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i])
+	{
+		if (is_space(s[i]) == 1)
+			i++;
+		else
+			break ;
+	}
+	if (i == ft_strlen(s))
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
+void	free_exit(char *s, t_data *data, int code)
+{
+	if (s)
+		printf("%s\n", s);
+	free_data(data);
+	exit(code);
 }

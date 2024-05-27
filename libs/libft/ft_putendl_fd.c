@@ -1,13 +1,12 @@
-/*usr/bin/cc -Wall -Wextra -Werror -g "$0" && exec ./a.out "$@"*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiwang <xiwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/16 19:16:05 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/16 19:16:34 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/17 16:09:01 by xiwang            #+#    #+#             */
+/*   Updated: 2023/05/17 16:09:03 by xiwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +15,16 @@
 void	ft_putendl_fd(char *s, int fd)
 {
 	ft_putstr_fd(s, fd);
-	ft_putchar_fd('\n', fd);
+	write(fd, "\n", 1);
 }
 
-/* // temp for main */
-/* #include <unistd.h> */
-/*  */
-/* void	ft_putchar_fd(char c, int fd) */
-/* { */
-/*     write(fd, &c, 1); */
-/* } */
-/*  */
-/* void	ft_putstr_fd(char *s, int fd) */
-/* { */
-/*     while (*s) */
-/*         ft_putchar_fd(*s++, fd); */
-/* } */
-/*  */
-/* int	main(void) */
-/* { */
-/*     char	*s = "Hello."; */
-/*     ft_putendl_fd(s, 1); */
-/* } */
+/*
+int	main(void)
+{
+	ft_putendl_fd("file descriptor?", 0);
+
+	return 0;
+}
+
+//ssize_t write(int __fd, const void *__buf, size_t __nbyte)
+*/

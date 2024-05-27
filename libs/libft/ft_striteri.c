@@ -1,49 +1,50 @@
-/*usr/bin/cc -Wall -Wextra -Werror -g "$0" && exec ./a.out "$@"*/
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jschroed <jschroed@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: xiwang <xiwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/16 17:56:08 by jschroed          #+#    #+#             */
-/*   Updated: 2023/05/16 18:07:39 by jschroed         ###   ########.fr       */
+/*   Created: 2023/05/15 20:09:19 by xiwang            #+#    #+#             */
+/*   Updated: 2023/05/24 19:30:16 by xiwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+/*
+apply a function to each character of a string
+ft_striteri doesn't return anything and works directly
+on the original string.
+
+return statement in void serves to exit the function and
+return to the location where the function was called(eg. int main).
+*/
 
 void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
 	unsigned int	i;
 
 	i = 0;
-	if (!s || !f)
+	if (s == NULL || f == NULL)
 		return ;
 	while (s[i])
 	{
-		f(i, s + i);
+		f (i, &s[i]);
 		i++;
 	}
 }
 
-/* // temp for main */
-/* #include <stdio.h> */
-/*  */
-/* void	change_char(unsigned int i, char *s) */
-/* { */
-/*     if (s && *s) */
-/*     { */
-/*         *s += i % 26; // kept i inside alphabet */
-/*     } */
-/* } */
-/*  */
-/*  */
-/* int	main(void) */
-/* { */
-/*     char s[] = "aaa"; */
-/*  */
-/*     printf("%s\n", s); */
-/*     ft_striteri(s, change_char); */
-/*     printf("%s\n", s); */
-/* } */
+/*
+void	print_s(unsigned int i, char *s)
+{
+		printf("i = %d, s[%d] = %c\n", i, i, *s);
+}
+//DONT ITERATE AGAIN
+
+int main()
+{
+	char s[] = "hi there";//char array, not char pointer
+	ft_striteri(s, print_s);
+	return 0;
+}
+*/
